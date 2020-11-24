@@ -39,13 +39,12 @@ export class SinglyLinkedList {
     }
 
     traverse(): any[] {
-        let temp: ListNode = this.head.next; // defines pointer on the head of the linked list
-        let arr: any[] = [this.head.value];
-        while (temp !== this.tail) {
+        let arr: any[] = [];
+        let temp: ListNode = this.head;
+        while (temp) {
             arr.push(temp.value);
-            temp = temp.next; // moves the pointer for the next loop
+            temp = temp.next;
         }
-        arr.push(this.tail.value);
         return arr;
     }
 
@@ -60,4 +59,29 @@ export class SinglyLinkedList {
         }
         return this; // returns the linked list object for method chaining 
     }
+
+    deleteTailNode(): SinglyLinkedList {
+        const newLength = this.length - 1;
+        this.tail = undefined;
+        for (let i = 1, temp: ListNode = this.head; i <= newLength; i++) {
+            if (i === newLength) {
+                this.tail = temp;
+                this.tail.next = undefined;
+            } else {
+                temp = temp.next;
+            }
+        }
+        return this;
+    }
+}
+
+export const debug = (linkedList: SinglyLinkedList): void => {
+    let temp: ListNode = linkedList.head.next; // defines pointer on the head of the linked list
+    let arr: any[] = [linkedList.head];
+    while (temp !== linkedList.tail) {
+        arr.push(temp);
+        temp = temp.next; // moves the pointer for the next loop
+    }
+    arr.push(linkedList.tail);
+    console.info(arr);
 }
