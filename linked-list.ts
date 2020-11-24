@@ -20,7 +20,7 @@ export class SinglyLinkedList {
                 temp.next = createListNode(i);
                 temp = temp.next; // Moves the pointer up by 1
             }
-            this.tail = temp // The last node (is referenced by temp) is the tail
+            this.tail = temp // The last node (is referenced by temp) is the tail  
         }
     }
 
@@ -49,7 +49,15 @@ export class SinglyLinkedList {
         return arr;
     }
 
-    insertAtEnd(value: any) {
-
+    insertAtEnd(value: any): SinglyLinkedList {
+        const listNodeObj: ListNode = new ListNode(value, undefined)
+        if (this.tail === undefined) {
+            this.head = listNodeObj;
+            this.tail = this.head;
+        } else {
+            this.tail.next = listNodeObj;
+            this.tail = this.tail.next;
+        }
+        return this;
     }
 }
