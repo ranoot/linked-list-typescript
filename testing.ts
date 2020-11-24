@@ -1,6 +1,6 @@
 import { SinglyLinkedList } from "./linked-list";
 
-let coolLinkedList = new SinglyLinkedList(["1", "3"]);
+let coolLinkedList = new SinglyLinkedList([]);
 coolLinkedList
     .insertAtEnd("4")
     .insertAtEnd("10");

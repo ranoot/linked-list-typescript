@@ -6,7 +6,7 @@ export class SinglyLinkedList {
     public head: ListNode;
     public tail: ListNode;
     
-    constructor( private nodeValueList: any[] ) {
+    constructor( nodeValueList: any[] ) {
         const createListNode = (i: number): ListNode => new ListNode(nodeValueList[i], undefined);
         const nodeValueListLength: number = nodeValueList.length; 
         if (nodeValueListLength === 1) {
@@ -39,11 +39,11 @@ export class SinglyLinkedList {
     }
 
     traverse(): any[] {
-        let temp: ListNode = this.head.next;
+        let temp: ListNode = this.head.next; // defines pointer on the head of the linked list
         let arr: any[] = [this.head.value];
         while (temp !== this.tail) {
             arr.push(temp.value);
-            temp = temp.next;
+            temp = temp.next; // moves the pointer for the next loop
         }
         arr.push(this.tail.value);
         return arr;
@@ -52,12 +52,12 @@ export class SinglyLinkedList {
     insertAtEnd(value: any): SinglyLinkedList {
         const listNodeObj: ListNode = new ListNode(value, undefined)
         if (this.tail === undefined) {
-            this.head = listNodeObj;
-            this.tail = this.head;
+            this.head = listNodeObj; // after insertion when list was initially empty, length is now 1
+            this.tail = this.head;  // Hence, the single node is both the head and the tail
         } else {
             this.tail.next = listNodeObj;
             this.tail = this.tail.next;
         }
-        return this;
+        return this; // returns the linked list object for method chaining 
     }
 }
