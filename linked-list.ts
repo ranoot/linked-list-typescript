@@ -94,10 +94,10 @@ export class SinglyLinkedList implements LinkedList {
 
     insertNode(index: number, value: any): SinglyLinkedList {
         const listLength = this.length;
-        if (index >= listLength) { throw new RangeError("Index provided exceeds the maximum index!"); }
+        if (index >= listLength) throw new RangeError("Index provided exceeds the maximum index!"); 
         // if (index < 0 || !Number.isInteger(index)) { throw new RangeError("Index must be a non-negative integer!"); }
         // isInteger doesn't seemed to be recognised by Typescript Compiler
-        if (index < 0) { throw new RangeError("Index must be a non-negative integer!"); }
+        if (index < 0) throw new RangeError("Index must be a non-negative integer!");
         if (listLength === 1) { 
             // for cases where there is only one node, the only index is 0 and hence does not check for index 0
             // the new node added is now the head and the previous head is now the tail
@@ -121,8 +121,8 @@ export class SinglyLinkedList implements LinkedList {
 
     deleteNode(index: number): SinglyLinkedList {
         const listLength = this.length;
-        if (index >= listLength) { throw new RangeError("Index provided exceeds the maximum index!"); }
-        if (index < 0) { throw new RangeError("Index must be a non-negative integer!"); }
+        if (index >= listLength) throw new RangeError("Index provided exceeds the maximum index!");
+        if (index < 0) throw new RangeError("Index must be a non-negative integer!");
         
         if (listLength === 1) {
             this.head = undefined; // test if only one is necessary
