@@ -2,21 +2,33 @@ export class ListNode {
     constructor(public value: any, public next: ListNode | undefined) {}
 }
 
-export class SinglyLinkedList {
+export interface LinkedList {
+    length: number;
+    head: ListNode;
+    tail: ListNode;
+    getNode(index: number): ListNode;
+    insertNodeAtEnd(value: any);
+    deleteTailNode();
+    insertNode(index: number, value: any);
+    deleteNode(index: number);
+    traverse(): any[];
+}
+
+export class SinglyLinkedList implements LinkedList {
     public head: ListNode;
     public tail: ListNode;
     
-    constructor( nodeValueList: any[] ) {
-        const createListNode = (i: number): ListNode => new ListNode(nodeValueList[i], undefined);
-        const nodeValueListLength: number = nodeValueList.length; 
-        if (nodeValueListLength === 1) {
+    constructor( ...nodeValues: any[] ) {
+        const createListNode = (i: number): ListNode => new ListNode(nodeValues[i], undefined);
+        const nodeValuesLength: number = nodeValues.length; 
+        if (nodeValuesLength === 1) {
             this.head = createListNode(0);
             this.tail = this.head; // Since there is only one node, the head and the tail refer to the same node
-        } else if (nodeValueListLength > 1) {
+        } else if (nodeValuesLength > 1) {
             let temp: ListNode; // Creates a temporary pointer in order to insert elements
             this.head = createListNode(0); 
             temp = this.head;
-            for (let i = 1; i < nodeValueListLength; i++) { // i = 1 as head node is already defined
+            for (let i = 1; i < nodeValuesLength; i++) { // i = 1 as head node is already defined
                 temp.next = createListNode(i);
                 temp = temp.next; // Moves the pointer up by 1
             }
@@ -36,6 +48,12 @@ export class SinglyLinkedList {
             } while (!!temp) // checks whether the next value is undefined
             return len;
         }
+    }
+
+    getNode(index: number): ListNode {
+        let temp: ListNode = this.head;
+        for (let i = 0; i < index; i++) { temp = temp.next; }
+        return temp;
     }
 
     traverse(): any[] {
@@ -97,7 +115,29 @@ export class SinglyLinkedList {
             }
             let newNode: ListNode = new ListNode(value, temp2);
             temp1.next = newNode;
-            return this;
         }
+        return this;
+    }
+
+    deleteNode(index: number): SinglyLinkedList {
+        const listLength = this.length;
+        if (index >= listLength) { throw new RangeError("Index provided exceeds the maximum index!"); }
+        if (index < 0) { throw new RangeError("Index must be a non-negative integer!"); }
+        
+        if (listLength === 1) {
+            this.head = undefined; // test if only one is necessary
+            this.tail = undefined;
+        } else if (index === 0) {
+            this.head = this.head.next
+        } else {
+            let temp1: ListNode = this.head;
+            let temp2: ListNode = this.head.next.next;
+            for (let i = 0; i < index - 1; i++) {
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+            temp1.next = temp2;
+        }
+        return this;
     }
 }
