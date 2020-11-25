@@ -1,8 +1,9 @@
 import { SinglyLinkedList } from "./linked-list";
 
-let coolLinkedList = new SinglyLinkedList([]);
-coolLinkedList
-    .insertAtEnd("4")
-    .insertAtEnd("10")
-    .deleteTailNode();
+console.log("---start---")
+
+let coolLinkedList = new SinglyLinkedList([2, 3]);
+
+coolLinkedList.insertNode(0, 1);
+
 console.log(coolLinkedList.traverse());

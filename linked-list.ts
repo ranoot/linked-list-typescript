@@ -48,7 +48,7 @@ export class SinglyLinkedList {
         return arr;
     }
 
-    insertAtEnd(value: any): SinglyLinkedList {
+    insertNodeAtEnd(value: any): SinglyLinkedList {
         const listNodeObj: ListNode = new ListNode(value, undefined)
         if (this.tail === undefined) {
             this.head = listNodeObj; // after insertion when list was initially empty, length is now 1
@@ -73,15 +73,31 @@ export class SinglyLinkedList {
         }
         return this;
     }
-}
 
-export const debug = (linkedList: SinglyLinkedList): void => {
-    let temp: ListNode = linkedList.head.next; // defines pointer on the head of the linked list
-    let arr: any[] = [linkedList.head];
-    while (temp !== linkedList.tail) {
-        arr.push(temp);
-        temp = temp.next; // moves the pointer for the next loop
+    insertNode(index: number, value: any): SinglyLinkedList {
+        const listLength = this.length;
+        if (index >= listLength) { throw new RangeError("Index provided exceeds the maximum index!"); }
+        // if (index < 0 || !Number.isInteger(index)) { throw new RangeError("Index must be a non-negative integer!"); }
+        // isInteger doesn't seemed to be recognised by Typescript Compiler
+        if (index < 0) { throw new RangeError("Index must be a non-negative integer!"); }
+        if (listLength === 1) { 
+            // for cases where there is only one node, the only index is 0 and hence does not check for index 0
+            // the new node added is now the head and the previous head is now the tail
+            this.head = new ListNode(value, this.tail);
+        } else if (index === 0) {
+            // for cases that list length is != 1 and the head is replaced
+            this.head = new ListNode(value, this.head);
+        } else {
+            // for other cases where the insertion is not at the head
+            let temp1: ListNode = this.head; // 2 pointers are necessary, this one for reassigning the pointer (.next)
+            let temp2: ListNode = this.head.next; // this one for setting the pointer (.next) of the new node
+            for (let i = 0; i < index - 1; i++) { // traverses the list, setting the pointers in the correct positions
+                temp1 = temp1.next;
+                temp2 = temp2.next;
+            }
+            let newNode: ListNode = new ListNode(value, temp2);
+            temp1.next = newNode;
+            return this;
+        }
     }
-    arr.push(linkedList.tail);
-    console.info(arr);
 }
